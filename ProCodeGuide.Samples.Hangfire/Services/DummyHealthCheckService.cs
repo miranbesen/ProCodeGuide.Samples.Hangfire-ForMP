@@ -1,8 +1,8 @@
 ﻿namespace ProCodeGuide.Samples.Hangfire.Services
 {
-    public class DummyEmailService : IEmailService
+    public class DummyHealthCheckService : IHealthCheckService
     {
-        public void SendEmail(string backGroundJobType, string startTime)
+        public async Task HealthCheck(string backGroundJobType, string startTime)
         {
             Console.WriteLine(backGroundJobType + " - " + startTime + " - Email Sent - " + DateTime.Now.ToLongTimeString());
         }

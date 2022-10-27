@@ -12,6 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using ProCodeGuide.Samples.Hangfire.Settings;
 
 namespace ProCodeGuide.Samples.Hangfire
 {
@@ -31,13 +34,21 @@ namespace ProCodeGuide.Samples.Hangfire
             services.AddHangfireServer();
 
             services.AddControllers();
+            //services.AddTransient<IHealthCheckService, DummyHealthCheckService>();
+            services.AddTransient<IHealthCheckService, HealthCheckService>();
+            services.AddTransient<IMailService, Services.MailService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProCodeGuide.Samples.Hangfire", Version = "v1" });
             });
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+           
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<TaskSettings>(Configuration.GetSection("TaskSettings"));
 
-            services.AddTransient<IEmailService, DummyEmailService>();
-        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +60,7 @@ namespace ProCodeGuide.Samples.Hangfire
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProCodeGuide.Samples.Hangfire v1"));
             }
-
+            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthorization();
