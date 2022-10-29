@@ -14,6 +14,11 @@ namespace ProCodeGuide.Samples.Hangfire.Controllers
             this.mailService = mailService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("Send")]
         public async Task<IActionResult> Send([FromForm] MailRequest request)
         {

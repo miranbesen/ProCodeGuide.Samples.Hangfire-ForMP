@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using ProCodeGuide.Samples.Hangfire.Settings;
+using ProCodeGuide.Samples.Hangfire.Model.Context;
 
 namespace ProCodeGuide.Samples.Hangfire
 {
@@ -37,6 +38,7 @@ namespace ProCodeGuide.Samples.Hangfire
             //services.AddTransient<IHealthCheckService, DummyHealthCheckService>();
             services.AddTransient<IHealthCheckService, HealthCheckService>();
             services.AddTransient<IMailService, Services.MailService>();
+            services.AddDbContext<ProCodeGuideSamplesHangfireContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProCodeGuide.Samples.Hangfire", Version = "v1" });

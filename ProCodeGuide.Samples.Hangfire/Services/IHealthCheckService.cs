@@ -3,7 +3,7 @@ namespace ProCodeGuide.Samples.Hangfire.Services
 {
     public interface IHealthCheckService
     {
-        Task HealthCheck(string backGroundJobType, string startTime);
+        Task HealthCheck(string backGroundJobType, string startTime, string serviceUrl, string toMail);
     
     }
 }

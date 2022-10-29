@@ -17,6 +17,12 @@ namespace ProCodeGuide.Samples.Hangfire.Services
             _mailSettings = mailSettings.Value;
             _logger = logger;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mailRequest"></param>
+        /// <returns></returns>
         public async Task SendEmailAsync(MailRequest mailRequest)
         {
             using (SmtpClient SmtpServer = new())
@@ -25,7 +31,6 @@ namespace ProCodeGuide.Samples.Hangfire.Services
                 {
                     var email = new MimeMessage();
                     email.From.Add(MailboxAddress.Parse(_mailSettings.Mail));
-
                     email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
                     email.Subject = mailRequest.Subject;
                     var builder = new BodyBuilder();
